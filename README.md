@@ -14,9 +14,9 @@ Cloud Functions processes and send through Pushover.net notification to my cell-
 
 ## Structure
 
-`notification-processor` - orchestrates the job
-`notification` - (in specific: `notification service`) - handles the notifcation distribution
-`notification-jobs-repository` - provides the jobs for processor
+- `notification-processor` - orchestrates the job
+- `notification` - (in specific: `notification service`) - handles the notifcation distribution
+- `notification-jobs-repository` - provides the jobs for processor
 
 ## TODO
 
