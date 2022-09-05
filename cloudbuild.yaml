@@ -1,0 +1,23 @@
+steps:
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["install"]
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "build"]
+  - name: "bash"
+    args: ["cp", "package.json", "dist/package.json"]
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    args:
+      - gcloud
+      - functions
+      - deploy
+      - car-reminder
+      - --region=europe-west3
+      - --retry
+      - --source=dist
+      - --runtime=nodejs16
+      - --entry-point=processNotifications
+      - --trigger-topic=process-notifications
+      - --timeout=300s
+      - --set-secrets=PUSHOVER_API_KEY=pushover-api-key:1,PUSHOVER_GROUP_KEY=pushover-group-key:1
+      - --max-instances=1
+      - --service-account=full-access@pet-projects-dkdev.iam.gserviceaccount.com
