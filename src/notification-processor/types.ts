@@ -1,8 +1,8 @@
-import { NotificationJob } from "../notification-jobs-repository/types";
+import { Reminder } from "../reminder";
 
 export interface NotificationProcessor {
-  fetchAndProcessJobs(): Promise<void>;
-  processJobs(jobs: NotificationJob[]): Promise<void>;
+  fetchAndProcessReminders(): Promise<void>;
+  processReminders(reminders: Reminder[]): Promise<void>;
 }
 
 export const NOTIFICATION_PROCESSOR_TOKENS = {

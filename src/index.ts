@@ -6,7 +6,7 @@ import * as functions from "@google-cloud/functions-framework";
 import { Container } from "inversify";
 import * as notificationProcessor from "./notification-processor";
 import * as notification from "./notification";
-import * as notificationRepository from "./notification-jobs-repository";
+import * as reminder from "./reminder";
 import { NotificationProcessor } from "./notification-processor";
 import { ConsoleNotificationService } from "./notification/services/ConsoleNotificationService";
 
@@ -15,7 +15,7 @@ const setup = (): Container => {
 
   notificationProcessor.initDi(container);
   notification.initDi(container);
-  notificationRepository.initDi(container);
+  reminder.initDi(container);
 
   return container;
 };
@@ -27,7 +27,7 @@ const main = async () => {
     notificationProcessor.NOTIFICATION_PROCESSOR_TOKENS.notificationProcessor
   );
 
-  await processor.fetchAndProcessJobs();
+  await processor.fetchAndProcessReminders();
 };
 
 const dev = async () => {
@@ -41,7 +41,7 @@ const dev = async () => {
     notificationProcessor.NOTIFICATION_PROCESSOR_TOKENS.notificationProcessor
   );
 
-  await processor.fetchAndProcessJobs();
+  await processor.fetchAndProcessReminders();
 };
 
 functions.cloudEvent("processNotifications", main);

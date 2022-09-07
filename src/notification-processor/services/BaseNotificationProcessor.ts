@@ -1,13 +1,9 @@
 import { inject, injectable } from "inversify";
 import {
-  NotificationJob,
-  NotificationJobsRepository,
-  NOTIFICATION_REPOSITORY_TOKENS,
-} from "../../notification-jobs-repository/types";
-import {
   NotificationService,
   NOTIFICATION_TOKENS,
 } from "../../notification/types";
+import { Reminder, ReminderRepository, REMINDER_TOKENS } from "../../reminder";
 import { NotificationProcessor } from "../types";
 
 @injectable()
@@ -15,18 +11,18 @@ export class BaseNotificationProcessor implements NotificationProcessor {
   constructor(
     @inject(NOTIFICATION_TOKENS.notificationService)
     private readonly notificationService: NotificationService,
-    @inject(NOTIFICATION_REPOSITORY_TOKENS.repository)
-    private readonly notificationRepository: NotificationJobsRepository
+    @inject(REMINDER_TOKENS.repository)
+    private readonly reminderRepository: ReminderRepository
   ) {}
 
-  async fetchAndProcessJobs(): Promise<void> {
-    const jobs = await this.notificationRepository.fetchReadyJobs();
-    await this.processJobs(jobs);
+  async fetchAndProcessReminders(): Promise<void> {
+    const jobs = await this.reminderRepository.fetchReadyReminders();
+    await this.processReminders(jobs);
   }
 
-  async processJobs(jobs: NotificationJob[]): Promise<void> {
-    for (const job of jobs) {
-      await this.notificationService.sendMessage(await job.toMessage());
+  async processReminders(reminders: Reminder[]): Promise<void> {
+    for (const reminder of reminders) {
+      await this.notificationService.sendMessage(await reminder.toMessage());
     }
   }
 }
