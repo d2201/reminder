@@ -18,6 +18,6 @@ steps:
       - --entry-point=processNotifications
       - --trigger-topic=process-notifications
       - --timeout=300s
-      - --set-secrets=PUSHOVER_API_KEY=pushover-api-key:1,PUSHOVER_GROUP_KEY=pushover-group-key:1
+      - --set-secrets=PUSHOVER_API_KEY=pushover-api-key:1,PUSHOVER_GROUP_KEY=pushover-group-key:1,EXCHANGE_RATES_API_KEY=exchange-rates-api-key:1
       - --max-instances=1
       - --service-account=full-access@pet-projects-dkdev.iam.gserviceaccount.com
